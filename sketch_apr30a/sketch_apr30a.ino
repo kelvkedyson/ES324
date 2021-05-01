@@ -1,8 +1,8 @@
 #include "IRremote.h"
 
-int receiver = 11;
-int bulbRelay = 8;
-int fanRelay = 7;
+int receiver = 5;
+int bulbRelay = 7;
+int fanRelay = 6;
 
 IRrecv irrecv(receiver);
 decode_results results;
