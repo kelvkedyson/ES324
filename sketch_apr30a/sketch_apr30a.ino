@@ -18,7 +18,14 @@ void translateIR(){
         Serial.println("POWER OFF"); 
         powerOFFBulb();
        break;
-       
+       case 0xFF629D:
+        Serial.println("FAN ON");
+        powerONFan();
+        break;
+       case 0xFFA857:
+        Serial.println("FAN OFF");
+        powerOFFFan();
+        break;
       default:
         Serial.println("UNKNOWN KEY");
   }
