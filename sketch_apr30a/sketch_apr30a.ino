@@ -1,8 +1,8 @@
 #include "IRremote.h"
 
 int receiver = 5;
-int bulbRelay = 7;
-int fanRelay = 6;
+int bulbRelay = 7, bulbIndicator = 12;
+int fanRelay = 6, fanIndicator = 11;
 
 IRrecv irrecv(receiver);
 decode_results results;
@@ -12,19 +12,23 @@ void translateIR(){
   switch(results.value){
       case 0xFFA25D: 
         Serial.println("POWER ON");
-        powerONBulb(); 
+        powerONBulb();
+        powerONBulbIndicator();
       break;
       case 0xFFE21D: 
         Serial.println("POWER OFF"); 
         powerOFFBulb();
+        powerOFFBulbIndicator();
        break;
        case 0xFF629D:
         Serial.println("FAN ON");
         powerONFan();
+        powerONFanIndicator();
         break;
        case 0xFFA857:
         Serial.println("FAN OFF");
         powerOFFFan();
+        powerOFFFanIndicator();
         break;
       default:
         Serial.println("UNKNOWN KEY");
@@ -34,6 +38,8 @@ void translateIR(){
 void setup(){
   pinMode(bulbRelay, OUTPUT);
   pinMode(fanRelay, OUTPUT);
+  pinMode(bulbIndicator, OUTPUT);
+  pinMode(fanIndicator, OUTPUT);
   Serial.begin(9600);
   irrecv.enableIRIn(); //starting the receiver
 }
@@ -44,6 +50,7 @@ void loop(){
     translateIR();
     irrecv.resume();
   }
+  
 }
 
 //function to power on a bulb_relay
@@ -64,4 +71,20 @@ void powerONFan(){
 //function to power off a fan_relay
 void powerOFFFan(){
   digitalWrite(fanRelay, LOW);
+}
+
+void powerONBulbIndicator(){
+  digitalWrite(bulbIndicator, HIGH);
+}
+
+void powerOFFBulbIndicator(){
+  digitalWrite(bulbIndicator, LOW);
+}
+
+void powerONFanIndicator(){
+  digitalWrite(fanIndicator, HIGH);
+}
+
+void powerOFFFanIndicator(){
+  digitalWrite(fanIndicator, LOW);
 }
